@@ -45,13 +45,4 @@ public class OwnerDaoJdbc implements OwnerDao {
                 owner.getCompanyId(), owner.getFirstName(), owner.getSecondName(), owner.getId());
         return getById(owner.getId());
     }
-
-    public Owner save(Owner owner) {
-        if (jdbcTemplate.query("SELECT * FROM Owner WHERE ID = ?", new OwnerRowMapper(),
-                owner.getId()).isEmpty()) {
-            return insert(owner);
-        } else {
-            return update(owner);
-        }
-    }
 }

@@ -45,13 +45,4 @@ public class AccountDaoJdbc implements AccountDao {
                 account.getOwnerId(), account.getName(), account.getRate(), account.getId());
         return getById(account.getId());
     }
-
-    public Account save(Account account) {
-        if (jdbcTemplate.query("SELECT * FROM Account WHERE ID = ?", new AccountRowMapper(),
-                account.getId()).isEmpty()) {
-            return insert(account);
-        } else {
-            return update(account);
-        }
-    }
 }

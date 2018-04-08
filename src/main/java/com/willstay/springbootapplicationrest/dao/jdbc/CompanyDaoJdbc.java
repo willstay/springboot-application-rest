@@ -39,13 +39,4 @@ public class CompanyDaoJdbc implements CompanyDao {
                 company.getTitle(), company.getId());
         return getById(company.getId());
     }
-
-    public Company save(Company company) {
-        if (jdbcTemplate.query("SELECT * FROM Company WHERE ID = ?", new CompanyRowMapper(),
-                company.getId()).isEmpty()) {
-            return insert(company);
-        } else {
-            return update(company);
-        }
-    }
 }
