@@ -1,8 +1,9 @@
 package com.willstay.springbootapplicationrest.service;
 
-import com.willstay.springbootapplicationrest.dao.jdbc.OwnerDaoJdbc;
+import com.willstay.springbootapplicationrest.dao.OwnerDao;
 import com.willstay.springbootapplicationrest.domain.Owner;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -10,21 +11,26 @@ import java.util.List;
 @Component
 public class OwnerService {
     @Autowired
-    OwnerDaoJdbc ownerDaoJdbc;
+    OwnerDao ownerDao;
 
     public Owner getById(Long id) {
-        return ownerDaoJdbc.getById(id);
+        return ownerDao.getById(id);
     }
 
     public List<Owner> getAll() {
-        return ownerDaoJdbc.getAll();
+        return ownerDao.getAll();
     }
 
     public List<Owner> getAllByCompanyId(Long companyId) {
-        return ownerDaoJdbc.getAllByCompanyId(companyId);
+        return ownerDao.getAllByCompanyId(companyId);
     }
 
     public Owner save(Owner owner) {
-       return ownerDaoJdbc.save(owner);
+        try {
+            ownerDao.getById(owner.getId());
+            return ownerDao.update(owner);
+        } catch (EmptyResultDataAccessException e) {
+            return ownerDao.insert(owner);
+        }
     }
 }
