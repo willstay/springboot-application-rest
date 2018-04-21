@@ -28,8 +28,8 @@ public class CompanyDaoJdbc implements CompanyDao {
 
     @Override
     public Company insert(Company company) {
-        jdbcTemplate.query("INSERT INTO Company(ID,TITLE) VALUES (?,?)",
-                new CompanyRowMapper(), company.getId(), company.getTitle());
+        jdbcTemplate.update("INSERT INTO Company(ID,TITLE) VALUES (?,?)",
+                company.getId(), company.getTitle());
         return getById(company.getId());
     }
 
